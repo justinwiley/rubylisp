@@ -14,6 +14,7 @@ DEFAULTS = { :nil => :nil,
   :list     => lambda {|*args| Cons.from_a(args)},
   :print    => lambda {|*args| puts *args; :nil },
 }
+SORTED_DEFAULT_KEYS = DEFAULTS.keys.map{|x| x.to_s}.sort
 
 require 'rubygems'
 gem 'sexp'  # prevent other gem definitions of sexp like in ParseTree
@@ -21,3 +22,4 @@ require 'sexp'
 require 'piggyback'
 require 'cons'
 require 'lenv'
+require 'interpreter'
