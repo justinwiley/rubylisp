@@ -20,7 +20,13 @@ describe Cons do
   end
 
   it '#lispeval should accept an environment with bound operator and evaluate' do
-    Cons.new(:+, Cons.new(1, Cons.new(2, :nil))).lispeval(@l, nil).should == 3
+    env = Lenv.new(nil, {:+ => lambda{|x, y| x + y }})
+    Cons.new(:+, Cons.new(1, Cons.new(2, :nil))).lispeval(env, nil)
+  end
+
+  it '#lispeval should be compatible with s-expressions' do
+    env = Lenv.new(nil, DEFAULTS)
+    "(+ 1 3)".parse_sexp.consify.lispeval(env,nil).should == 4
   end
 
   it '#consify should be compatible with s-expressions' do
@@ -31,5 +37,12 @@ describe Cons do
     Cons.new(1,Cons.new(2,Cons.new(3,:nil))).arrayify.should == [1,2,3]
   end
 
+  it '#to_sexp should convert regular cons to sexp cons' do
+    Cons.new(1,2).to_sexp.should == '(cons 1 2)'
+  end
+
+  it '#to_sexp should convert conslist to sexp conslist' do
+    Cons.new(1,Cons.new(1,2)).to_sexp.should == '(cons 1 (cons 1 2))'
+  end
 end
 

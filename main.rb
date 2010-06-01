@@ -1,5 +1,20 @@
 #!/bin/env ruby
-DEFAULTS = { :nil => :nil,
+
+require 'rubygems'
+require 'ruby-debug'
+require 'logger'
+
+LOG = Logger.new(STDOUT)  # stdout stderr logfile.txt
+LOG.level = Logger::INFO  # debug warn info
+LOG.level = Logger::WARN  # debug warn info
+LOG.info 'Main initialize'
+
+gem 'sexp'  # prevent other gem definitions of sexp like in ParseTree
+require 'sexp'
+
+
+DEFAULTS = { 
+  :nil      => :nil,
   :t        => :t,
   :+        => lambda {|x,y| x + y },
   :-        => lambda {|x,y| x - y },
@@ -16,9 +31,6 @@ DEFAULTS = { :nil => :nil,
 }
 SORTED_DEFAULT_KEYS = DEFAULTS.keys.map{|x| x.to_s}.sort
 
-require 'rubygems'
-gem 'sexp'  # prevent other gem definitions of sexp like in ParseTree
-require 'sexp'
 require 'piggyback'
 require 'cons'
 require 'lenv'

@@ -16,6 +16,7 @@ class Lenv
   end
   
   def lookup(symbol)
+    LOG.info "Looking up value of #{symbol} (#{@defs[symbol]})"
     return @defs[symbol] if @defs.has_key?(symbol)
     raise "No value for symbol #{symbol}" if @parent.nil?
     @parent.lookup(symbol)
